@@ -1,9 +1,20 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>CP</title>
+	<title>hi</title>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
 </head>
 <body>
-	<p>hi</p>
+	<button>Hi</button>
+<script>
+	$("button").click(function(event) {
+		$.ajax({
+		   url: "../app.py",
+		   success: function(response){
+		     console.log("success");
+		   }
+		});
+	});
+</script>
 </body>
 </html>
