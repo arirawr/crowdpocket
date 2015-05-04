@@ -4,20 +4,46 @@ from keys import keys
 # AUTH
 ck = keys['consumer_key']
 at = keys['access_token']
-at2 = keys['at2']
+ari = keys['ari']
 
-tags = "example"
+tags = "zakari2"
 
 # ACTIONS
 
-payload = {'consumer_key': ck, 'access_token': at2, 'tag': tags}
+actions = '['
+
+payload = {'consumer_key': ck, 'access_token': ari, 'tag': tags}
 r = requests.get("https://getpocket.com/v3/get", params=payload)
-json_key = r.json()['list'].keys()[0]
-found_url = r.json()['list'][json_key]['given_url']
-print found_url
+json_key = r.json()['list'].keys()
+for key in json_key:
+	found_url = r.json()['list'][key]['given_url']
+	action = '{ "action" : "add", "tags" : "' + tags + '", "url" : "' + found_url + '"},'
+	actions += action
+actions = actions[:-1]
+actions += ']'
+print actions
+
+#actions = '[{ "action" : "add", "tags" : "' + tags + '", "url" : "' + found_url + '"}]'
+
+#actions = '[{ "action" : "add", "tags" : "zakari", "url" : "http://google.com"},{ "action" : "add", "tags" : "zakari", "url" : "http://mcgill.ca"}]'
+
+payload = {'consumer_key': ck, 'access_token': at, 'actions': actions}
+r = requests.post("https://getpocket.com/v3/send", params=payload)
+print r.text
+
+payload = {'consumer_key': ck, 'access_token': at, 'tag': tags}
+r = requests.get("https://getpocket.com/v3/get", params=payload)
+json_key = r.json()['list'].keys()
+for key in json_key:
+	found_url = r.json()['list'][key]['given_url']
+	action = '{ "action" : "add", "tags" : "' + tags + '", "url" : "' + found_url + '"},'
+	actions += action
+actions = actions[:-1]
+actions += ']'
+print actions
 
 actions = '[{ "action" : "add", "tags" : "' + tags + '", "url" : "' + found_url + '"}]'
 
-payload = {'consumer_key': ck, 'access_token': at, 'actions': actions}
+payload = {'consumer_key': ck, 'access_token': ari, 'actions': actions}
 r = requests.post("https://getpocket.com/v3/send", params=payload)
 print r.text
