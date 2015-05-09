@@ -8,21 +8,22 @@ ck = keys['consumer_key']
 #zak = keys['zak']
 users = keys['group_users']
 
-tags = "nonexistent"
+tags = ['startupbae', 'cutebae', 'chinesebae', 'designbae']
 
 # ACTIONS
 
 actions = '['
 
 for user in users:
-	payload = {'consumer_key': ck, 'access_token': user, 'tag': tags}
-	r = requests.get("https://getpocket.com/v3/get", params=payload)
-	if r.json()['list']:
-		json_key = r.json()['list'].keys()
-		for key in json_key:
-			found_url = r.json()['list'][key]['given_url']
-			action = '{ "action" : "add", "tags" : "' + tags + '", "url" : "' + found_url + '"},'
-			actions += action
+	for tag in tags:
+		payload = {'consumer_key': ck, 'access_token': user, 'tag': tag}
+		r = requests.get("https://getpocket.com/v3/get", params=payload)
+		if r.json()['list']:
+			json_key = r.json()['list'].keys()
+			for key in json_key:
+				found_url = r.json()['list'][key]['given_url']
+				action = '{ "action" : "add", "tags" : "' + tag + '", "url" : "' + found_url + '"},'
+				actions += action
 actions = actions[:-1]
 actions += ']'
 print actions
