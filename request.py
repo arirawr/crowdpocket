@@ -1,14 +1,12 @@
+import datetime
 import requests
 from keys import keys
 
 # AUTH
 ck = keys['consumer_key']
-#at = keys['access_token']
-#ari = keys['ari']
-#zak = keys['zak']
 users = keys['group_users']
 
-tags = ['startupbae', 'cutebae', 'chinesebae', 'designbae']
+tags = ['bae']
 
 # ACTIONS
 
@@ -26,6 +24,7 @@ for user in users:
 				actions += action
 actions = actions[:-1]
 actions += ']'
+print datetime.datetime.now()
 print actions
 
 #actions = '[{ "action" : "add", "tags" : "' + tags + '", "url" : "' + found_url + '"}]'
